@@ -1,0 +1,30 @@
+review_id,review_original,rating,sentence,tokens_str,tokens_list,label
+1,Pakaging nya cakep keren bagus banget,5,Pakaging nya cakep keren bagus banget,pakaging nya cakep keren bagus banget,"['pakaging', 'nya', 'cakep', 'keren', 'bagus', 'banget']",1
+2,"Cocok buat kulit ku yg kering, habis cuci muka moist",5,Cocok buat kulit ku yg kering,cocok kulit ku kering,"['cocok', 'kulit', 'ku', 'kering']",1
+2,"Cocok buat kulit ku yg kering, habis cuci muka moist",5,habis cuci muka moist,habis cuci muka moist,"['habis', 'cuci', 'muka', 'moist']",1
+3,Jenis kulit: Kulit acne atau beruntusan,5,Jenis kulit: Kulit acne atau beruntusan,jenis kulit kulit acne beruntus,"['jenis', 'kulit', 'kulit', 'acne', 'beruntus']",1
+4,"Respon cepat
+Proses cepat
+Pengiriman cepat
+Barang sesuai deskripsi",5,"Respon cepat
+Proses cepat
+Pengiriman cepat
+Barang sesuai deskripsi",respon cepat proses cepat kirim cepat barang sesuai deskripsi,"['respon', 'cepat', 'proses', 'cepat', 'kirim', 'cepat', 'barang', 'sesuai', 'deskripsi']",1
+5,Dipake enak...fresh n seger.ada mint2nya,5,Dipake enak,pakai enak,"['pakai', 'enak']",1
+5,Dipake enak...fresh n seger.ada mint2nya,5,fresh n seger,fresh segar,"['fresh', 'segar']",1
+5,Dipake enak...fresh n seger.ada mint2nya,5,ada mint2nya,mint nya,"['mint', 'nya']",1
+6,"Sudah memakainya agak lama , hasil bgs flek memudar kulit kita menjadi cerah❤️",5,hasil bgs flek memudar kulit kita menjadi cerah,hasil bgs flek pudar kulit cerah,"['hasil', 'bgs', 'flek', 'pudar', 'kulit', 'cerah']",1
+7,"Sudah sering membeli produk ini , hasil flek pudar kulit menjadi cerah❤️",5,Sudah sering membeli produk ini,beli produk,"['beli', 'produk']",1
+7,"Sudah sering membeli produk ini , hasil flek pudar kulit menjadi cerah❤️",5,hasil flek pudar kulit menjadi cerah,hasil flek pudar kulit cerah,"['hasil', 'flek', 'pudar', 'kulit', 'cerah']",1
+8,"Sesuai pesanan. Varian lumayan, yg paling banyak sepertinya green tea",5,Sesuai pesanan,sesuai pesan,"['sesuai', 'pesan']",1
+8,"Sesuai pesanan. Varian lumayan, yg paling banyak sepertinya green tea",5,Varian lumayan,varian lumayan,"['varian', 'lumayan']",1
+8,"Sesuai pesanan. Varian lumayan, yg paling banyak sepertinya green tea",5,yg paling banyak sepertinya green tea,green tea,"['green', 'tea']",1
+9,Udah repurchase ksekian kali,5,Udah repurchase ksekian kali,repurchase ksekian kali,"['repurchase', 'ksekian', 'kali']",1
+10,pokonya melembabkan bgt 💕 semoga terus cocok sm produknya,5,pokonya melembabkan bgt  semoga terus cocok sm produknya,pokok melembabkan moga cocok produk,"['pokok', 'melembabkan', 'moga', 'cocok', 'produk']",1
+11,"proses pembelian lama, dan barang hilang saat pengiriman",1,proses pembelian lama,proses beli,"['proses', 'beli']",0
+11,"proses pembelian lama, dan barang hilang saat pengiriman",1,dan barang hilang saat pengiriman,barang hilang kirim,"['barang', 'hilang', 'kirim']",0
+11,"proses pembelian lama, dan barang hilang saat pengiriman",1,proses pembelian lama,proses beli,"['proses', 'beli']",0
+11,"proses pembelian lama, dan barang hilang saat pengiriman",1,dan barang hilang saat pengiriman,barang hilang kirim,"['barang', 'hilang', 'kirim']",0
+11,pembelian di proses cukup lama dan barang hilang dalam pengiriman,1,pembelian di proses cukup lama dan barang hilang dalam pengiriman,beli proses barang hilang kirim,"['beli', 'proses', 'barang', 'hilang', 'kirim']",0
+12,efek kering,3,efek kering,efek kering,"['efek', 'kering']",0
+lanjutkan�,,,,,,

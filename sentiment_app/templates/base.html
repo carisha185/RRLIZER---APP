@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BBLIZE - Sentiment Analysis{% endblock %}</title>
+    {% load static %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #cb9fb3;
+            color: #000000;
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        nav {
+            padding: 0;
+            margin-top: 12px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 50px;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+        
+        nav a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 30px;
+            height: 50px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:last-child {
+            border-right: none;
+        }
+        
+        nav a:hover {
+            background-color: #94436d;
+        }
+        
+        nav a.active {
+            background-color: #d26767;
+            font-weight: 600;
+        }
+        
+        nav .preprocess-link {
+            color: #ff1900;
+        }
+        
+        nav .sentiment-link {
+            color: #ff1900;
+        }
+        
+        /* Logo di Navbar */
+        .nav-logo {
+            position: absolute;
+            right: 20px;
+            top: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-logo img {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Content */
+        .content {
+            background-color: rgb(197, 146, 191);
+            padding: 60px 40px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 4em;
+            margin-bottom: 30px;
+            letter-spacing: 8px;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+        
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+        
+        p {
+            font-size: 1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+        
+        .intro-text {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 1.05em;
+            color: #000000;
+        }
+        
+        /* Buttons */
+        .btn-group {
+            margin-top: 40px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #ff00cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            border: 2px solid #333;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: white;
+            color: #333;
+        }
+        
+        .btn-primary {
+            background-color: #ff006f;
+        }
+        
+        .btn-primary:hover {
+            background-color: rgb(246, 249, 76);
+            color: #d8ff64;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature-box {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        
+        .feature-box h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .section h3 {
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .faq-item {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+        }
+        
+        .faq-item h4 {
+            color: #5f103b;
+            margin-bottom: 10px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #eba2df;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div style="position: relative; margin: 20px; display: flex; align-items: flex-start; gap: 20px;">
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">HOME</a></li>
+                <li><a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">ABOUT</a></li>
+                <li><a href="{% url 'help' %}" class="{% if request.resolver_match.url_name == 'help' %}active{% endif %}">HELP</a></li>
+                <li><a href="{% url 'preprocess' %}" class="preprocess-link {% if request.resolver_match.url_name == 'preprocess' %}active{% endif %}">PRE-PROCESS</a></li>
+                <li><a href="{% url 'sentiment' %}" class="sentiment-link {% if request.resolver_match.url_name == 'sentiment' %}active{% endif %}">SENTIMENT ANALYSIS</a></li>
+            </ul>
+        </nav>
+       
+        <div class="nav-logo">
+            <img src="{% static 'images/rrlizer-logo.png' %}" alt="RRLIZER Logo">
+        </div>
+    </div>
+    
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

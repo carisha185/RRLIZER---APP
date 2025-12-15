@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ABOUT - RRLIZER{% endblock %}
+
+{% block content %}
+<style>
+    .logo-container {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .logo-container img {
+        max-width: 500px;
+        height: auto;
+        display: inline-block;
+    }
+</style>
+
+<div class="content">
+    <h1>ABOUT</h1>
+    
+    <!-- LOGO PNG MENGGANTIKAN TULISAN "RRLIZER" -->
+    <div class="logo-container">
+        <img src="{% static 'images/rrlizer-logo.png' %}" alt="RRLIZER Logo">
+    </div>
+    
+    <div class="section">
+        <h3>RRLIZER?</h3>
+        <p>
+            RRLIZER adalah aplikasi web untuk analisis sentimen review yang dikembangkan sebagai bagian dari skripsi. Aplikasi ini menggabungkan teknik natural language processing (NLP) dengan machine learning untuk memberikan insight mendalam tentang sentimen pelanggan terhadap produk kosmetik.
+        </p>
+    </div>
+    
+    
+    <div class="section">
+        <h3>Teknologi yang Dimanfaatkan </h3>
+        <ul>
+            <li><strong>Backend</strong>: Django (Python Web Framework)</li>
+            <li><strong>Frontend</strong>: HTML, CSS, JavaScript</li>
+            <li><strong>Database</strong>: SQLite</li>
+            <li><strong>NLP Libraries</strong>: NLTK, Sastrawi, IndoCollex</li>
+            <li><strong>Machine Learning</strong>: Scikit-learn, NumPy, Pandas</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h3>Fitur Utama</h3>
+        <ul>
+            <li>PRA-PEMROSESAN DATA MENTAH / PRE-PROCESSING</li>
+            <li>SENTIMENT ANALYSIS PADA REVIEW</li>
+
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h3>Dataset</h3>
+        <p>
+            Aplikasi ini dirancang untuk bekerja dengan dataset yang mengandung:
+        </p>
+        <ul>
+            <li><strong>Review Tekstual</strong>: Review produk kosmetik dalam Bahasa Indonesia</li>
+            <li><strong>Rating Numerik</strong>: Skala rating dari 1-5 bintang</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

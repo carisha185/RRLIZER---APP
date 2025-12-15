@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}HOME - RRLIZER{% endblock %}
+
+{% block content %}
+<style>
+    .logo-container {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .logo-container img {
+        max-width: 700px;
+        height: auto;
+        display: inline-block;
+    }
+</style>
+
+<div class="content">
+    <!-- LOGO PNG MENGGANTIKAN TULISAN RRLIZE -->
+    <div class="logo-container">
+        <img src="{% static 'images/rrlizer-logo.png' %}" alt="RRLIZER Logo">
+    </div>
+    
+    <p style="margin-bottom: 30px; color: #000000; font-weight: bold;">
+        Aplikasi komprehensif yang dirancang untuk melakukan analisis sentimen terhadap data Review. 
+    </p>
+    
+    <div class="features">
+        <div class="feature-box">
+            <h3>Pre-Processing</h3>
+            <p>Pembersihan data otomatis dengan tokenisasi, normalisasi teks, dan penanganan slang bahasa Indonesia menggunakan NLTK, Sastrawi, dan IndoCollex.</p>
+        </div>
+        <div class="feature-box">
+            <h3>Sentiment Analysis</h3>
+            <p>Analisis Sentiment dengan menggunakan model Support Vector Machine.</p>
+        </div>
+    </div>
+    
+    <div class="btn-group">
+        <a href="{% url 'preprocess' %}" class="btn btn-primary">Mulai Pre-Processing</a>
+        <a href="{% url 'help' %}" class="btn">Pelajari Cara Kerja</a>
+    </div>
+</div>
+{% endblock %}

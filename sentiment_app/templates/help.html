@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}HELP - RRLIZER{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h1>BANTUAN</h1>
+    
+    <div class="section">
+        <h3>Panduan Penggunaan</h3>
+        
+        <div class="faq-item">
+            <h4>1. Persiapan Data</h4>
+            <p>Sebelum memulai, pastikan data Anda memiliki format yang tepat:</p>
+            <ul>
+                <li>Format file: CSV atau XLSX</li>
+                <li>Kolom: review (teks review) dan rating (angka 1-5)</li>
+                <li>Tidak ada header yang kosong</li>
+                <li>Jumlah data minimal: 100 review</li>
+            </ul>
+        </div>
+        
+        <div class="faq-item">
+            <h4>2. Pre-Processing Data</h4>
+            <p>Langkah-langkah yang dilakukan sistem:</p>
+            <ol>
+                <li><strong>Upload Dataset</strong>: Pilih file CSV/XLSX dari komputer Anda</li>
+                <li><strong>Pembersihan Teks</strong>: Menghapus URL, mention, hashtag, dan karakter spesial</li>
+                <li><strong>Case Folding</strong>: Mengubah semua teks menjadi lowercase</li>
+                <li><strong>Tokenisasi</strong>: Memecah teks menjadi token individual</li>
+                <li><strong>Normalisasi Slang</strong>: Mengubah slang Indonesia menjadi kata baku menggunakan kamus IndoCollex</li>
+                <li><strong>Stemming</strong>: Mengurangi kata ke bentuk dasarnya menggunakan Sastrawi</li>
+                <li><strong>Stopword Removal</strong>: Menghapus kata-kata umum yang kurang informatif</li>
+                <li><strong>Download Hasil</strong>: Data bersih dapat diunduh untuk digunakan di tahap berikutnya</li>
+            </ol>
+        </div>
+        
+        <div class="faq-item">
+            <h4>3. Sentiment Analysis</h4>
+            <p>Proses analisis sentimen melibatkan langkah-langkah berikut:</p>
+            <ol>
+                <li><strong>Upload Data Testing</strong>: Data uji untuk evaluasi model</li>
+                <li><strong>Feature Extraction</strong>: Mengubah teks menjadi feature vector</li>
+                <li><strong>Prediksi</strong>: Melakukan prediksi pada data</li>
+                <li><strong>Evaluasi</strong>: Menampilkan metrik performa model (Accuracy, Precision, Recall, F1-Score)</li>
+            </ol>
+        </div>
+        
+    
+    <div class="section">
+        <h3>Troubleshooting</h3>
+        <div class="faq-item">
+            <h4>File tidak bisa diupload</h4>
+            <p>Pastikan format file adalah CSV atau XLSX, ukuran tidak terlalu besar (&lt; 50MB).</p>
+        </div>
+        <div class="faq-item">
+            <h4>Error pada pre-processing</h4>
+            <p>Kemungkinan ada kolom yang kosong atau nama kolom berbeda. Pastikan kolom review dan rating sudah benar.</p>
+        </div>
+     
+    </div>
+</div>
+{% endblock %}

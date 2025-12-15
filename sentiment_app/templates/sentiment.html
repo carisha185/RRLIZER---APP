@@ -1,0 +1,663 @@
+{% extends 'base.html' %}
+
+{% block title %}SENTIMENT ANALYSIS - RRLIZER{% endblock %}
+
+{% block content %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .sentiment-link {
+            color: #e74c3c;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+            letter-spacing: 4px;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+        
+        .content > p {
+            text-align: center;
+            color: #000000;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .upload-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .upload-section h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .upload-box {
+            border: 2px dashed #ccc;
+            padding: 30px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .upload-box:hover {
+            border-color: #e74c3c;
+            background-color: #fff5f5;
+        }
+
+        .upload-box input[type="file"] {
+            display: none;
+        }
+        
+        .upload-box h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .upload-box p {
+            font-size: 13px;
+            color: #999;
+            margin: 5px 0;
+        }
+        
+        .file-info {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+            font-size: 13px;
+        }
+        
+        .file-info.show {
+            display: block;
+        }
+        
+        .template-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .template-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        .template-btn:hover {
+            background-color: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-info {
+            background-color: #e7a1eb;
+            color: #000000;
+        }
+        
+        .alert-warning {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        
+        .alert-success {
+            background-color: #e8f5e9;
+            color: #2E7D32;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            border: 2px solid #333;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s; 
+        }
+        
+        .btn:hover {
+            background-color: white;
+            color: #333;
+        }
+        
+        .btn-primary {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+        }
+        
+        .btn-primary:hover {
+            background-color: white;
+            color: #e74c3c;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .progress-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .progress-section.show {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #465d40;
+            width: 0%;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .log-box {
+            background-color: #000000;
+            color: rgb(185, 187, 185);
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+        
+        .result-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .result-section.show {
+            display: block;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .metric-box {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .metric-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        
+        .chart-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        
+        table th {
+            background-color: #333;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* ===== PAGINATION STYLES ===== */
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pagination-button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .pagination-button:hover:not(:disabled) {
+            background-color: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+
+        .pagination-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination-info {
+            font-size: 14px;
+            color: #666;
+            min-width: 220px;
+            text-align: center;
+        }
+    </style>
+
+    <div class="container">
+        <div class="content">
+            <h1>SENTIMENT ANALYSIS</h1>
+            <p>Analisis sentimen dengan model pre-trained (Bootstrap Ensemble SVM)</p>
+            
+            <div class="alert alert-info">
+                <strong>Format Data Testing yang Diperlukan:</strong><br>
+                CSV/XLSX dengan kolom: sentence, review_original, rating, dan review_id
+            </div>
+
+            <div class="upload-section">
+                <h3>Upload Data Testing</h3>
+                
+                <div class="upload-box" onclick="document.getElementById('testFileInput').click()">
+                    <label style="cursor: pointer; display: block;">
+                        <strong>Upload Data</strong><br>
+                        <p>CSV / XLSX</p>
+                    </label>
+                    <input type="file" id="testFileInput" name="test_file" accept=".csv,.xlsx">
+                    
+                    <div class="file-info" id="testFileInfo">
+                        <strong>File:</strong> <span id="testFileName"></span><br>
+                        <strong>Rows:</strong> <span id="testRows"></span>
+                    </div>
+                </div>
+                
+                <div class="template-buttons">
+                    <a href="/sentiment/?download_template=test&format=csv" class="template-btn">Unduh Template (CSV)</a>
+                    <a href="/sentiment/?download_template=test&format=xlsx" class="template-btn">Unduh Template (XLSX)</a>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="analyzeBtn" disabled>Analyze Now</button>
+                    <button class="btn" id="resetBtn">Reset</button>
+                </div>
+            </div>
+            
+            <div class="progress-section" id="progressSection">
+                <h3>Processing...</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                <div class="log-box" id="logBox"></div>
+            </div>
+            
+            <div class="result-section" id="resultSection">
+                <div class="alert alert-success">
+                    <strong>Analisis Berhasil!</strong> Hasil prediksi dan metrik performa telah tersedia.
+                </div>
+                
+                <h3>Performance Metrics</h3>
+                <div class="metrics-grid" id="metricsGrid"></div>
+                
+                <h3>Confusion Matrix (Rating vs Predicted)</h3>
+                <div class="chart-container" id="confusionMatrixContainer"></div>
+                
+                <h3>Sentiment Distribution</h3>
+                <div class="chart-container" id="sentimentDistContainer"></div>
+                
+                <h3>Correlation</h3>
+                <div id="correlationResult"></div>
+                
+                <h3>Preview Predictions</h3>
+                <div class="table-container" id="samplePredictions"></div>
+                
+                <!-- PAGINATION CONTROLS -->
+                <div class="pagination-container">
+                    <button class="pagination-button" id="prevBtn" onclick="sentimentPrevPage()">← Sebelumnya</button>
+                    
+                    <div class="pagination-info">
+                        <span id="sentimentPageInfo">Halaman 1 dari 1</span>
+                    </div>
+                    
+                    <button class="pagination-button" id="nextBtn" onclick="sentimentNextPage()">Selanjutnya →</button>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="downloadResultBtn">Download Results (.csv)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form style="display:none;">{% csrf_token %}</form>
+
+    <script>
+        const testFileInput = document.getElementById('testFileInput');
+        const testFileInfo = document.getElementById('testFileInfo');
+        const testFileName = document.getElementById('testFileName');
+        const testRows = document.getElementById('testRows');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const progressSection = document.getElementById('progressSection');
+        const progressFill = document.getElementById('progressFill');
+        const logBox = document.getElementById('logBox');
+        const resultSection = document.getElementById('resultSection');
+        const metricsGrid = document.getElementById('metricsGrid');
+        const downloadResultBtn = document.getElementById('downloadResultBtn');
+        
+        // ===== PAGINATION VARIABLES =====
+        let allPredictions = [];
+        let sentimentCurrentPage = 1;
+        const SENTIMENT_ROWS_PER_PAGE = 10;
+        const samplePredictionsContainer = document.getElementById('samplePredictions');
+        
+        let testFile = null;
+        let analysisResults = null;
+        
+        function getCookie(name) { /*ambil csrf token dari browser*/
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        const csrftoken = getCookie('csrftoken');
+        
+        testFileInput.addEventListener('change', function(e) { /* user pilih file di file input*/
+            testFile = e.target.files[0];
+            if (testFile) {
+                testFileName.textContent = testFile.name;
+                testFileInfo.classList.add('show');
+                previewFile(testFile, 'test');
+                analyzeBtn.disabled = false;
+            }
+        });
+        
+        function previewFile(file, type) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('action', 'preview');
+            
+            fetch('/sentiment/', {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-CSRFToken': csrftoken }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    testRows.textContent = data.rows;
+                }
+            });
+        }
+        
+        analyzeBtn.addEventListener('click', function() {
+            const formData = new FormData();
+            formData.append('test_file', testFile);
+            formData.append('action', 'analyze');
+            
+            progressSection.classList.add('show');
+            progressSection.scrollIntoView({ behavior: 'smooth' });
+            analyzeBtn.disabled = true;
+            
+            logBox.textContent = 'Analyzing sentiment...\n\n';
+            
+            let progress = 0; /*progres naik tiap sedetik*/
+            const progressInterval = setInterval(() => {
+                progress += 2;
+                if (progress <= 95) {
+                    progressFill.style.width = progress + '%';
+                    progressFill.textContent = progress + '%';
+                }
+            }, 1000);
+            
+            fetch('/sentiment/', { /*post ke backend*/
+                method: 'POST',
+                body: formData,
+                headers: { 'X-CSRFToken': csrftoken }
+            })
+            .then(response => response.json())
+            .then(data => {
+                clearInterval(progressInterval);
+                progressFill.style.width = '100%';
+                progressFill.textContent = '100%';
+                
+                if (data.success) {
+                    logBox.textContent += data.log;
+                    analysisResults = data;
+                    displayResults(data); /*tampilan kalau sudah selesai*/
+                    setTimeout(() => {
+                        resultSection.classList.add('show');
+                        resultSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 500);
+                } else {
+                    alert('Error: ' + data.error);
+                    logBox.textContent += '\n ERROR: ' + data.error;
+                    console.error('Error response:', data);
+                }
+                
+                analyzeBtn.disabled = false;
+            })
+            .catch(error => {
+                clearInterval(progressInterval);
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat analisis');
+                logBox.textContent += '\n ERROR: ' + error.message;
+                analyzeBtn.disabled = false;
+            });
+        });
+        
+        function displayResults(data) {
+            metricsGrid.innerHTML = `
+                <div class="metric-box">
+                    <div class="metric-number">${(data.cv_metrics.accuracy * 100).toFixed(2)}%</div>
+                    <div class="metric-label">Accuracy</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-number">${(data.cv_metrics.precision * 100).toFixed(2)}%</div>
+                    <div class="metric-label">Precision</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-number">${(data.cv_metrics.recall * 100).toFixed(2)}%</div>
+                    <div class="metric-label">Recall</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-number">${(data.cv_metrics.f1_score * 100).toFixed(2)}%</div>
+                    <div class="metric-label">F1-Score</div>
+                </div>
+            `;
+            
+            document.getElementById('confusionMatrixContainer').innerHTML = 
+                `<img src="data:image/png;base64,${data.confusion_matrix_img}" alt="Confusion Matrix">`;
+            
+            document.getElementById('sentimentDistContainer').innerHTML = 
+                `<img src="data:image/png;base64,${data.sentiment_dist_img}" alt="Sentiment Distribution">`;
+            
+            document.getElementById('correlationResult').innerHTML = 
+                `<p style="font-size: 18px; text-align: center;">
+                   <strong>Pearson r:</strong> ${(data.correlation_pearson ?? data.correlation).toFixed(4)} &nbsp;|&nbsp;
+                   <strong>Spearman ρ:</strong> ${(data.correlation_spearman ?? 0).toFixed(4)}
+                 </p>`;
+            
+            // Store semua predictions dan reset halaman
+            allPredictions = data.sample_predictions;
+            sentimentCurrentPage = 1;
+            displayPaginatedPredictions();
+        }
+
+        function displayPaginatedPredictions() {
+            const totalPages = Math.ceil(allPredictions.length / SENTIMENT_ROWS_PER_PAGE);
+            const start = (sentimentCurrentPage - 1) * SENTIMENT_ROWS_PER_PAGE;
+            const end = start + SENTIMENT_ROWS_PER_PAGE;
+            const pageData = allPredictions.slice(start, end);
+
+            let sampleHtml = '<table><thead><tr><th>Review</th><th>Rating</th><th>Pos Count</th><th>Total</th><th>Ratio</th><th>Sentiment</th></tr></thead><tbody>';
+            
+            pageData.forEach(pred => {
+                const sentimentLabel = {0: 'Negative', 1: 'Positive', 2: 'Neutral'}[pred.sentiment_class] || 'Unknown';
+                sampleHtml += `<tr>
+                    <td>${pred.review_original}</td>
+                    <td>${pred.rating}</td>
+                    <td>${pred.positive_count}</td>
+                    <td>${pred.total_sentences}</td>
+                    <td>${pred.sentiment_ratio.toFixed(2)}</td>
+                    <td><strong>${sentimentLabel}</strong></td>
+                </tr>`;
+            });
+            
+            sampleHtml += '</tbody></table>';
+            samplePredictionsContainer.innerHTML = sampleHtml;
+
+            // Update pagination info
+            document.getElementById('sentimentPageInfo').textContent = `Halaman ${sentimentCurrentPage} dari ${totalPages} (${allPredictions.length} total)`;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = sentimentCurrentPage === 1;
+            document.getElementById('nextBtn').disabled = sentimentCurrentPage === totalPages;
+        }
+
+        function sentimentNextPage() {
+            const totalPages = Math.ceil(allPredictions.length / SENTIMENT_ROWS_PER_PAGE);
+            if (sentimentCurrentPage < totalPages) {
+                sentimentCurrentPage++;
+                displayPaginatedPredictions();
+                samplePredictionsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function sentimentPrevPage() {
+            if (sentimentCurrentPage > 1) {
+                sentimentCurrentPage--;
+                displayPaginatedPredictions();
+                samplePredictionsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        downloadResultBtn.addEventListener('click', function() {
+            window.location.href = '/sentiment/?download=results';
+        });
+        
+        resetBtn.addEventListener('click', function() {
+            if (confirm('Yakin reset?')) location.reload();
+        });
+    </script>
+{% endblock %}

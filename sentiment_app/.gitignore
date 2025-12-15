@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+.env
+.env.*
+
+# Django
+db.sqlite3
+staticfiles/
+
+# Data files
+*.csv
+*.xlsx
+
+# Model files (kalau ada)
+*.pkl
+*.joblib
+
+# OS
+.DS_Store
